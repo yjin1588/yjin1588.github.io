@@ -3,9 +3,9 @@ description: "I am an engineer in computer graphics and dream to be an artist"
 about: "I am an engineer in computer graphics and dream to be an artist"
 location: "Busan, South Korea"
 email: yjin1588@gmail.com
-baseurl: ""
+baseurl: "/"
 
-url: "http://yjin1588.github.io" # replace by your site's url
+url: "https://yjin1588.github.io" # replace by your site's url
 twitter_username: yjin1588
 github_username:  yjin1588
 author: "Youjin Lee"
