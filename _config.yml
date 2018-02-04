@@ -1,14 +1,14 @@
-title: "Your Name"
-description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
-about: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
-location: "Your Region, Country"
-email: your-email@example.com
-baseurl: "/material-theme"
+title: "Youjin Lee"
+description: "I am an engineer in computer graphics and dream to be an artist"
+about: "I am an engineer in computer graphics and dream to be an artist"
+location: "Busan, South Korea"
+email: yjin1588@gmail.com
+baseurl: ""
 
-url: "http://himsel.me" # replace by your site's url
-twitter_username: your-name
-github_username:  lukas-h
-author: "Your Name"
+url: "http://yjin1588.github.io" # replace by your site's url
+twitter_username: yjin1588
+github_username:  yjin1588
+author: "Youjin Lee"
 
 # google analytics tracking code, please change the value
 g_analytics: ""
