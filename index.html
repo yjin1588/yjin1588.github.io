@@ -40,6 +40,7 @@ layout: default
     {% for project in site.data.projects %}
     <li>
       <p class="my-item"><a href="{{ project.link }}" class="my-link">{{ project.name }}</a><br>
+        <span class="my-item-sub">{{ project.duration }}</span><br>
         {{ project.description }}
       </p>
     </li>
@@ -57,7 +58,8 @@ layout: default
     {% for publication in site.data.publications %}
     <li>
       <p class="my-item"><a href="{{ publication.link }}" class="my-link">{{ publication.title }}</a><br>
-        <span>{{ publication.names }}</span><span>{{ publication.conference }}</span><span>{{ publication.page }}</span><span>{{ publication.year }}</span>
+        <span class="my-item-sub">{{ publication.names }}</span><span class="my-item-sub">{{ publication.conference }}</span>
+        <span class="my-item-sub">{{ publication.page }}</span><span class="my-item-sub">{{ publication.year }}</span>
       </p>
     </li>
     {% endfor %}
