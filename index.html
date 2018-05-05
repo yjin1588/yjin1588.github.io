@@ -40,7 +40,7 @@ layout: default
     {% for project in site.data.projects %}
     <li>
       <p class="my-item"><a href="{{ project.link }}" class="my-link">{{ project.name }}</a><br>
-        <span class="my-item-sub">{{ project.duration }}</span><br>
+        <span class="my-item-sub">{{ project.duration | date: "%b %Y" }}</span><br>
         {{ project.description }}
       </p>
     </li>
