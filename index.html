@@ -33,7 +33,7 @@ layout: default
   </div>
 </div>
 
-
+<!-- 
 <div id="projects">
   <h2 class="my-mini-heading">{{ site.projects_btn }}</h2>
   <ul>
@@ -49,7 +49,7 @@ layout: default
   <div>
     <a onclick="hide_lists();" class="waves-effect waves-teal btn-flat btn-large">{{ site.close_btn }}</a>
   </div>
-</div>
+</div> -->
 
 
 <div id="publications">
@@ -69,6 +69,23 @@ layout: default
   </div>
 </div>
 
+<div id="drawings">
+  <h2 class="my-mini-heading">{{ site.drawing_btn }}</h2>
+  <ul>
+    {% for drawing in site.data.drawings %}
+    <li>
+      <p class="my-item">
+        <span class="my-item-sub"><img src="{{ drawing.link }}" alt="{{ drawing.title }}"></span>
+        <span class="my-item-sub">{{ drawing.title }}</span>
+        <span class="my-item-sub">{{ drawing.explanation }}</span>
+      </p>
+    </li>
+    {% endfor %}
+  </ul>
+  <div>
+    <a onclick="hide_lists();" class="waves-effect waves-teal btn-flat btn-large">{{ site.close_btn }}</a>
+  </div>
+</div>
 
 <noscript>
   <div id="posts-noscript">
