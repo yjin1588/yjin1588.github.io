@@ -77,9 +77,9 @@ layout: default
     {% for drawing in site.data.drawings %}
     <li>
       <p class="my-item">
-        <span class="my-item-sub"><img src="{{ drawing.link }}" alt="{{ drawing.title }}"></span>
-        <span class="my-item-sub">{{ drawing.title }}</span>
-        <span class="my-item-sub">{{ drawing.explanation }}</span>
+        <span class="my-item-sub"><img src="{{ drawing.link }}"></span><br>
+        <span class="my-item-sub">{{ drawing.title }}</span><br>
+        <span class="my-item-sub">{{ drawing.explanation }}</span><br>
       </p>
     </li>
     {% endfor %}
