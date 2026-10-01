@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>22개 아이템 팀별 추첨</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+        padding: 30px;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .description {
+        text-align: center;
+        color: #666;
+        margin-bottom: 25px;
+    }
+
+    .settings {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+    }
+
+    input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+
+    button {
+        border: none;
+        border-radius: 8px;
+        padding: 11px 18px;
+        font-size: 15px;
+        cursor: pointer;
+        background: #333;
+        color: white;
+    }
+
+    button:hover {
+        background: #555;
+    }
+
+    .teams {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .team {
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 20px;
+        background: #fafafa;
+    }
+
+    .team h2 {
+        margin-top: 0;
+    }
+
+    .items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        min-height: 45px;
+    }
+
+    .item {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .draw-button {
+        display: block;
+        margin: 30px auto 10px;
+        font-size: 17px;
+        padding: 14px 35px;
+        background: #007aff;
+    }
+
+    .draw-button:hover {
+        background: #0066d6;
+    }
+
+    .reset-button {
+        display: block;
+        margin: 10px auto;
+        background: #888;
+    }
+
+    .item-list {
+        margin-top: 30px;
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+    }
+
+    .item-list h3 {
+        margin-bottom: 10px;
+    }
+
+    .available-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    @media (max-width: 700px) {
+        .teams {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎲 팀별 아이템 추첨</h1>
+
+    <div class="description">
+        22개 아이템 중 각 팀이 8개씩 무작위로 선택합니다.<br>
+        <b>중복 선택이 허용됩니다.</b>
+    </div>
+
+    <div class="settings">
+        <input id="itemCount" type="number" value="22" min="1">
+        <input id="teamCount" type="number" value="4" min="1">
+        <input id="pickCount" type="number" value="8" min="1">
+        <button onclick="createTeams()">설정 적용</button>
+    </div>
+
+    <div class="item-list">
+        <h3>아이템 목록</h3>
+        <div class="available-items" id="availableItems"></div>
+    </div>
+
+    <button class="draw-button" onclick="drawItems()">
+        🎲 전체 팀 추첨하기
+    </button>
+
+    <button class="reset-button" onclick="resetResults()">
+        초기화
+    </button>
+
+    <div class="teams" id="teams"></div>
+
+</div>
+
+<script>
+
+let items = [];
+let teamCount = 4;
+let pickCount = 8;
+
+// 초기 설정
+createTeams();
+
+function createTeams() {
+
+    const itemCount = parseInt(
+        document.getElementById("itemCount").value
+    );
+
+    teamCount = parseInt(
+        document.getElementById("teamCount").value
+    );
+
+    pickCount = parseInt(
+        document.getElementById("pickCount").value
+    );
+
+    // 아이템 생성
+    items = [];
+
+    for (let i = 1; i <= itemCount; i++) {
+        items.push(`아이템 ${i}`);
+    }
+
+    // 아이템 목록 표시
+    const availableItems =
+        document.getElementById("availableItems");
+
+    availableItems.innerHTML = "";
+
+    items.forEach(item => {
+
+        const div = document.createElement("div");
+
+        div.className = "item";
+        div.textContent = item;
+
+        availableItems.appendChild(div);
+
+    });
+
+    // 팀 생성
+    const teams = document.getElementById("teams");
+
+    teams.innerHTML = "";
+
+    for (let i = 1; i <= teamCount; i++) {
+
+        const team = document.createElement("div");
+
+        team.className = "team";
+
+        team.innerHTML = `
+            <h2>🏷️ ${i}팀</h2>
+            <div class="items" id="team-${i}">
+                아직 추첨하지 않았습니다.
+            </div>
+        `;
+
+        teams.appendChild(team);
+    }
+}
+
+
+// 랜덤 추첨
+function drawItems() {
+
+    if (items.length === 0) {
+        alert("아이템이 없습니다.");
+        return;
+    }
+
+    for (let team = 1; team <= teamCount; team++) {
+
+        const selected = [];
+
+        for (let i = 0; i < pickCount; i++) {
+
+            // 중복 허용
+            const randomIndex =
+                Math.floor(Math.random() * items.length);
+
+            selected.push(items[randomIndex]);
+        }
+
+        const container =
+            document.getElementById(`team-${team}`);
+
+        container.innerHTML = "";
+
+        selected.forEach(item => {
+
+            const div = document.createElement("div");
+
+            div.className = "item";
+            div.textContent = item;
+
+            container.appendChild(div);
+
+        });
+    }
+}
+
+
+// 결과 초기화
+function resetResults() {
+
+    for (let team = 1; team <= teamCount; team++) {
+
+        const container =
+            document.getElementById(`team-${team}`);
+
+        container.innerHTML =
+            "아직 추첨하지 않았습니다.";
+    }
+}
+
+</script>
+
+</body>
+</html>
