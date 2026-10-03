@@ -153,7 +153,8 @@
 
     <div class="description">
       각 팀은 8개의 미션을 뽑습니다!<br>
-      미션은 중복해서 뽑힐 수 있습니다.
+      한 팀 안에서는 같은 미션이 중복되지 않습니다.<br>
+      단, 팀과 팀 사이에서는 같은 미션이 나올 수 있습니다.
     </div>
 
     <div class="button-area">
@@ -228,18 +229,39 @@
 
         teamElement.innerHTML = "";
 
+
+        // ⭐ 현재 팀에서 이미 뽑은 미션 번호를 저장
+        // ⭐ 팀이 바뀌면 새로 만들어지므로 팀 간 중복은 허용됨
+        const selectedIndices = [];
+
+
         for (let i = 0; i < missionsPerTeam; i++) {
 
-          const randomIndex =
-            Math.floor(Math.random() * missions.length);
+          let randomIndex;
+
+
+          // ⭐ 현재 팀에서 이미 뽑은 미션이면 다시 뽑기
+          do {
+
+            randomIndex =
+              Math.floor(Math.random() * missions.length);
+
+          } while (selectedIndices.includes(randomIndex));
+
+
+          // ⭐ 현재 팀에서 뽑은 미션 기록
+          selectedIndices.push(randomIndex);
+
 
           const missionText =
             missions[randomIndex];
+
 
           const missionElement =
             document.createElement("div");
 
           missionElement.className = "mission";
+
 
           missionElement.innerHTML = `
             <div class="mission-number">
@@ -251,12 +273,14 @@
             </div>
           `;
 
+
           teamElement.appendChild(missionElement);
         }
       }
     }
 
 
+    // 페이지를 열었을 때 자동으로 미션 뽑기
     drawMissions();
 
   </script>
